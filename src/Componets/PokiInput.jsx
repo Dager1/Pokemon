@@ -9,7 +9,7 @@ function PokiInput() {
   const searchPokemon = async (e) => {
     e.preventDefault();
     const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${name}`
+      `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
     );
     setPoki(response.data);
   };
@@ -20,13 +20,11 @@ function PokiInput() {
         <div>
           <label>Enter the pokemon</label>
         </div>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value.toLowerCase())}
-        />
+        <input value={name} onChange={(e) => setName(e.target.value)} />
         <div>
-          {" "}
-          <button type="submit">Search</button>
+          <button type="submit" className="button">
+            Search
+          </button>
         </div>
       </form>
       {poki && (
