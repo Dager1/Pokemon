@@ -1,29 +1,22 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Style.css";
 
 function PokiInput() {
   const [name, setName] = useState("");
   const [poki, setPoki] = useState("");
 
-  console.log(name);
+  const searchPokemon = async (e) => {
+    e.preventDefault();
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
+    );
+    setPoki(response.data);
+  };
 
-  // ;
-  useEffect(() => {
-    const pokeFeatch = async () => {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name}`
-      );
-      console.log(name);
-      setPoki(response.data);
-    };
-    if (name) {
-      pokeFeatch();
-    }
-  }, [name]);
   return (
     <div>
-      <form>
+      <form onSubmit={searchPokemon}>
         <div>
           <label>Enter the pokemon</label>
         </div>
@@ -31,6 +24,10 @@ function PokiInput() {
           value={name}
           onChange={(e) => setName(e.target.value.toLowerCase())}
         />
+        <div>
+          {" "}
+          <button type="submit">Search</button>
+        </div>
       </form>
       {poki && (
         <div>
